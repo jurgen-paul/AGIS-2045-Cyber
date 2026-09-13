@@ -1,0 +1,6 @@
+{
+  "name": "AGIS 2045 Cyber-Node",
+  "description": "Zero-Trust Biomorphic Cyber-Node Operating Environment with volumetric quantum glass interfaces, neural intent routing, 512-bit post-quantum hardware enclave cryptography, global locator track-and-trace, crime seekmap, and fraud detection alert dispatch.",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
