@@ -28,6 +28,7 @@ import {
   LocatorFilterState 
 } from '../../types';
 import { CrimeSeekMap } from '../locator/CrimeSeekMap';
+import { HazardHeatmapPanel } from '../locator/HazardHeatmapPanel';
 import { TrackAndTracePanel } from '../locator/TrackAndTracePanel';
 import { FraudDetectorPanel } from '../locator/FraudDetectorPanel';
 import { CrimeFrequencyChart } from '../locator/CrimeFrequencyChart';
@@ -49,7 +50,7 @@ export function GlobalLocatorScreen({
   onDispatchAlert
 }: GlobalLocatorScreenProps) {
   // Navigation active tab inside locator
-  const [activeTab, setActiveTab] = useState<'seekmap' | 'voice_dispatch' | 'frequency' | 'tracktrace' | 'fraud' | 'alerts'>('seekmap');
+  const [activeTab, setActiveTab] = useState<'seekmap' | 'hazard_heatmap' | 'voice_dispatch' | 'frequency' | 'tracktrace' | 'fraud' | 'alerts'>('seekmap');
 
   // Selected entities
   const [selectedSubjectId, setSelectedSubjectId] = useState<string>(subjects[0]?.id || '');
@@ -230,6 +231,21 @@ export function GlobalLocatorScreen({
             </button>
 
             <button
+              onClick={() => setActiveTab('hazard_heatmap')}
+              className={`px-3.5 py-2 rounded-lg text-xs font-mono font-bold transition flex items-center gap-2 cursor-pointer ${
+                activeTab === 'hazard_heatmap'
+                  ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40 shadow-lg shadow-orange-950/40'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800'
+              }`}
+            >
+              <Flame className="w-4 h-4 text-orange-400 animate-pulse" />
+              <span>HAZARD HEATMAP</span>
+              <span className="px-1.5 py-0.2 rounded bg-orange-500/20 text-orange-300 text-[10px]">
+                D3 DENSITY
+              </span>
+            </button>
+
+            <button
               onClick={() => setActiveTab('voice_dispatch')}
               className={`px-3.5 py-2 rounded-lg text-xs font-mono font-bold transition flex items-center gap-2 cursor-pointer ${
                 activeTab === 'voice_dispatch'
@@ -326,6 +342,7 @@ export function GlobalLocatorScreen({
             seekRadiusKm={seekRadiusKm}
             onChangeSeekRadius={setSeekRadiusKm}
             onOpenVoiceDispatch={() => setActiveTab('voice_dispatch')}
+            onOpenHazardHeatmap={() => setActiveTab('hazard_heatmap')}
           />
 
           {/* Voice-Guided Dispatch & Audio Route Status Console */}
@@ -397,6 +414,23 @@ export function GlobalLocatorScreen({
               setSelectedCrime(crime);
             }}
             onOpenSendAlert={handleOpenAlertModal}
+          />
+        </div>
+      )}
+
+      {activeTab === 'hazard_heatmap' && (
+        <div className="space-y-6">
+          <HazardHeatmapPanel
+            crimes={crimes}
+            subjects={filteredSubjects}
+            onSelectCrime={(crime) => {
+              setSelectedCrime(crime);
+              setActiveTab('seekmap');
+            }}
+            onOpenSendAlert={handleOpenAlertModal}
+            onCenterMapCoordinates={(coords) => {
+              setActiveTab('seekmap');
+            }}
           />
         </div>
       )}

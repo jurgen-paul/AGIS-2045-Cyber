@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { SubjectIdentity, CrimeIncident, TrackWaypoint } from '../../types';
 import { latLngToCanvasXY, calculateDistanceKm, formatCoordinates } from '../../utils/geoUtils';
+import { HazardHeatmapSvgLayer } from './HazardHeatmapSvgLayer';
 
 interface CrimeSeekMapProps {
   subjects: SubjectIdentity[];
@@ -34,6 +35,7 @@ interface CrimeSeekMapProps {
   seekRadiusKm: number;
   onChangeSeekRadius: (radius: number) => void;
   onOpenVoiceDispatch?: () => void;
+  onOpenHazardHeatmap?: () => void;
 }
 
 export function CrimeSeekMap({
@@ -46,7 +48,8 @@ export function CrimeSeekMap({
   onOpenSendAlert,
   seekRadiusKm,
   onChangeSeekRadius,
-  onOpenVoiceDispatch
+  onOpenVoiceDispatch,
+  onOpenHazardHeatmap
 }: CrimeSeekMapProps) {
   // Map pan & zoom state
   const [zoom, setZoom] = useState(1);
@@ -57,6 +60,7 @@ export function CrimeSeekMap({
 
   // Layer visibility
   const [showCrimes, setShowCrimes] = useState(true);
+  const [showHeatmap, setShowHeatmap] = useState(true);
   const [showTracks, setShowTracks] = useState(true);
   const [showVillages, setShowVillages] = useState(true);
   const [showRadarSweep, setShowRadarSweep] = useState(true);
@@ -218,6 +222,17 @@ export function CrimeSeekMap({
             </button>
 
             <button
+              onClick={() => setShowHeatmap(!showHeatmap)}
+              className={`px-2 py-1 rounded text-[11px] font-mono transition cursor-pointer flex items-center gap-1 ${
+                showHeatmap ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40' : 'text-slate-400 hover:text-slate-200'
+              }`}
+              title="Toggle D3 Real-Time Hazard Heatmap Overlay"
+            >
+              <Flame className="w-3 h-3 text-orange-400" />
+              <span>Heatmap</span>
+            </button>
+
+            <button
               onClick={() => setShowTracks(!showTracks)}
               className={`px-2 py-1 rounded text-[11px] font-mono transition cursor-pointer flex items-center gap-1 ${
                 showTracks ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-slate-200'
@@ -249,6 +264,18 @@ export function CrimeSeekMap({
             >
               <Mic className="w-3.5 h-3.5 text-red-400 animate-pulse" />
               <span className="hidden sm:inline">Voice Dispatch</span>
+            </button>
+          )}
+
+          {/* D3 Hazard Heatmap Full Analytics quick button */}
+          {onOpenHazardHeatmap && (
+            <button
+              onClick={onOpenHazardHeatmap}
+              className="px-2.5 py-1.5 rounded-lg text-xs font-mono font-bold bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 border border-orange-500/40 transition cursor-pointer flex items-center gap-1.5 shadow-sm"
+              title="Open D3 Hazard Heatmap Analytics Dashboard"
+            >
+              <Flame className="w-3.5 h-3.5 text-orange-400" />
+              <span className="hidden sm:inline">Heatmap Analytics</span>
             </button>
           )}
 
@@ -347,6 +374,20 @@ export function CrimeSeekMap({
             {/* Australia */}
             <path d="M 760 340 L 880 340 L 890 420 L 800 440 L 750 390 Z" />
           </g>
+
+          {/* D3 Real-Time Hazard Heatmap Overlay */}
+          {showHeatmap && (
+            <HazardHeatmapSvgLayer
+              crimes={crimes}
+              opacity={0.65}
+              bandwidth={35}
+              thresholds={11}
+              weightMode="severity"
+              palette="crimsonHazard"
+              showContours={true}
+              showClusters={false}
+            />
+          )}
 
           {/* Selected Subject's Seek Radius Perimeter */}
           {selectedSubject?.coordinates && (

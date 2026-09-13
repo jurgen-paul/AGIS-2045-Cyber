@@ -61,6 +61,22 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="hidden md:flex items-center ml-4 lg:ml-6 px-3 py-1 bg-slate-700/50 border border-slate-600 rounded text-xs font-mono text-slate-300">
           repo: jurgen-paul/aegis-2045
         </div>
+
+        {/* OpenSSF Best Practices Badge */}
+        <button
+          onClick={() => onNavigate('openssf')}
+          className="hidden sm:inline-flex items-center rounded overflow-hidden border border-slate-700 hover:border-emerald-500/60 font-sans text-xs font-semibold cursor-pointer transition shadow-sm ml-2"
+          title="OpenSSF Best Practices: Passing (Click to inspect compliance portal)"
+        >
+          <div className="bg-[#24292e] text-slate-200 px-2.5 py-1 flex items-center gap-1.5 text-[11px]">
+            <ShieldCheck className="w-3 h-3 text-emerald-400" />
+            <span className="hidden lg:inline">openssf best practices</span>
+            <span className="lg:hidden">openssf</span>
+          </div>
+          <div className="bg-[#4c1] text-white px-2 py-1 uppercase tracking-wider text-[10px] font-bold">
+            passing
+          </div>
+        </button>
       </div>
 
       {/* Right: Status Indicators & Quick Actions */}

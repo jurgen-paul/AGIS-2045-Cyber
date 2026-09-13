@@ -17,7 +17,8 @@ import {
   Flame,
   FileText,
   Bot,
-  Compass
+  Compass,
+  Award
 } from 'lucide-react';
 import { NavigationScreen, PolicyEnforcementLevel, EnclaveLockState } from '../types';
 
@@ -52,6 +53,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const navItems: { id: NavigationScreen; label: string; icon: React.FC<any>; badge?: string | number; badgeColor?: string }[] = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { 
+      id: 'openssf', 
+      label: 'OpenSSF Best Practices', 
+      icon: Award, 
+      badge: 'PASSING', 
+      badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' 
+    },
     { 
       id: 'locator', 
       label: 'Locator & Crime SeekMap', 

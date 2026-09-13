@@ -1,6 +1,7 @@
 export type NavigationScreen = 
   | 'dashboard'
   | 'locator'
+  | 'openssf'
   | 'chatbot'
   | 'neural'
   | 'enclave'

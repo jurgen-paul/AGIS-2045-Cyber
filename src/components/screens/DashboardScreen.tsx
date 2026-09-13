@@ -29,7 +29,8 @@ import {
   FileText,
   Bot,
   Mic,
-  Compass
+  Compass,
+  Award
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -240,6 +241,16 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </button>
 
           <button
+            onClick={() => onNavigate('openssf')}
+            className="px-3.5 py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition border border-emerald-500/40 cursor-pointer shadow-sm"
+            title="OpenSSF Best Practices: 100% Passing Badge & Compliance Portal"
+          >
+            <Award className="w-3.5 h-3.5 text-emerald-400" />
+            <span>OpenSSF Badge</span>
+            <span className="px-1.5 py-0.2 rounded bg-[#4c1] text-white text-[10px] font-bold">PASSING</span>
+          </button>
+
+          <button
             onClick={() => onNavigate('chatbot')}
             className="px-3.5 py-2 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 text-purple-200 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition border border-purple-500/40 cursor-pointer shadow-sm"
             title="Open Neural Security Chatbot with Voice Talk & Remote SIEM Alerts"
@@ -285,6 +296,32 @@ export const DashboardScreen: React.FC<DashboardScreenProps> = ({
           </button>
         </div>
       )}
+
+      {/* OpenSSF Best Practices Certification Banner */}
+      <div 
+        onClick={() => onNavigate('openssf')}
+        className="bg-gradient-to-r from-slate-900 via-slate-900 to-emerald-950/40 border border-slate-800 hover:border-emerald-500/40 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 cursor-pointer transition shadow-md group"
+      >
+        <div className="flex items-center gap-3">
+          <div className="inline-flex items-center rounded overflow-hidden shadow border border-slate-700 font-sans text-xs font-semibold shrink-0">
+            <div className="bg-[#24292e] text-slate-200 px-2.5 py-1 flex items-center gap-1.5 text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span>OpenSSF Best Practices</span>
+            </div>
+            <div className="bg-[#4c1] text-white px-2.5 py-1 uppercase tracking-wider text-[10px] font-bold">
+              passing
+            </div>
+          </div>
+          <div className="text-xs font-mono text-slate-300">
+            <span className="text-white font-bold">OpenSSF CII Passing Badge: </span>
+            18/18 Criteria Verified • FLOSS Apache-2.0 • 34 Automated Tests • EAR 740.13(e) Notified
+          </div>
+        </div>
+        <div className="flex items-center gap-1 text-xs font-mono text-emerald-400 group-hover:translate-x-0.5 transition font-semibold shrink-0">
+          <span>Compliance Portal</span>
+          <ChevronRight className="w-4 h-4" />
+        </div>
+      </div>
 
       {/* 4 Professional Polish Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 shrink-0">

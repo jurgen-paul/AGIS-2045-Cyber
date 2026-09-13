@@ -15,6 +15,7 @@ import { AwsDeploymentScreen } from './components/screens/AwsDeploymentScreen';
 import { SecurityDocumentsScreen } from './components/screens/SecurityDocumentsScreen';
 import { SecurityChatbotScreen } from './components/screens/SecurityChatbotScreen';
 import { GlobalLocatorScreen } from './components/screens/GlobalLocatorScreen';
+import { OpenSSFComplianceScreen } from './components/screens/OpenSSFComplianceScreen';
 
 import { 
   NavigationScreen, 
@@ -518,6 +519,10 @@ export function App() {
               dispatchedAlerts={dispatchedAlerts}
               onDispatchAlert={handleDispatchLawEnforcementAlert}
             />
+          )}
+
+          {currentScreen === 'openssf' && (
+            <OpenSSFComplianceScreen />
           )}
 
           {currentScreen === 'chatbot' && (
